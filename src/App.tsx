@@ -37,6 +37,7 @@ function App() {
 
   return (
       <div style={{display: "flex", width: "100vw", flexDirection: "column", alignItems: "flex-start", padding: "25px"}}>
+        <Image  radius="md" src={tuLogo}  alt="Random image" style={{padding: "0px", marginBottom: "25px", width: "400px"}}/>
         <h4 style={{fontSize: "30px", margin: "0px"}}>Wieviel Energie verbraucht deine Heizung?</h4>
         <h6 style={{fontSize: "25px", margin: "0px"}}>Einfach sebst berechnen</h6>
 
@@ -90,7 +91,7 @@ function App() {
             <Button variant="outline" onClick={() => { calculateEnergyConsumption()}}>Berechnen</Button>
           </div>
 
-          <Image  radius="md" src={tuLogo}  alt="Random image" style={{padding: "0px", margin: "0px"}}/>
+
 
         </div>
 
