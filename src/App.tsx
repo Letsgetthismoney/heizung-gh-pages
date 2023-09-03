@@ -36,10 +36,11 @@ function App() {
   };
 
   return (
-      <div style={{display: "flex", width: "100vw", flexDirection: "column", alignItems: "center"}}>
-        <h1>Wieviel Energie verbraucht deine Heizung? - einfach selbst berechnen</h1>
+      <div style={{display: "flex", width: "100vw", flexDirection: "column", alignItems: "flex-start", padding: "25px"}}>
+        <h4 style={{fontSize: "30px", margin: "0px"}}>Wieviel Energie verbraucht deine Heizung?</h4>
+        <h6 style={{fontSize: "25px", margin: "0px"}}>Einfach sebst berechnen</h6>
 
-        <div style={{width: "500px", marginTop: "100px"}}>
+        <div style={{minWidth: "300px", marginTop: "50px", border: "1px solid lightgrey", borderRadius: "25px", padding: "25px"}}>
 
           <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center"}}>
 
@@ -68,7 +69,7 @@ function App() {
           </div>
 
           <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh"}}>
-            <h6 style={{margin: "0px", fontSize: "16px"}}>Wohungsfläche in m^2</h6>
+            <h6 style={{margin: "0px", fontSize: "16px"}}>Wohnungsfläche in m^2</h6>
           </div>
 
           <div style={{width: "100%", display: "flex", justifyContent: "flex-start", borderBottom: "1px solid lightgrey", marginTop: "1.25vh", paddingBottom: "1.25vh"}}>
@@ -202,13 +203,13 @@ function App() {
                         </div>
 
                         <Image  radius="md" src={forrest} alt="Random image" style={{padding: "0px", margin: "0px"}}/>
-                        <div style={{position: "absolute", width: "80vw", margin: "10vw", top : "30vh"}}>
+                        <div style={{position: "absolute", width: "80vw", margin: "10vw", bottom : "0px"}}>
                           <Progress
                               style={{width: "100%"}}
                               size={24}
                               sections={[
-                                { value: 0.13 / menge * 100, color: 'green', label: 0.13 + "Hektar",  },
-                                { value: 100, color: 'darkred', label: menge.toString().slice(0, 4) + "Hektar" },
+                                { value: 0.13 / menge * 100, color: 'green', label: 0.13.toString()  },
+                                { value: 100, color: 'darkred', label: menge.toString().slice(0, 4) },
 
                               ]}
                           />
