@@ -10,7 +10,6 @@ import img from '../src/img.png'
 import tuLogo from '../src/tuc_logo.gif'
 import oilFactory from '../src/oilFactory.png'
 import {Energietraeger, Energietraegers, Result} from "./Config";
-import Autoplay from 'embla-carousel-autoplay';
 import {Carousel} from '@mantine/carousel';
 
 
@@ -25,7 +24,6 @@ function App() {
     transition: 'opacity 0.5s ease-in-out',
   };
   const [opened, { open, close }] = useDisclosure(false);
-  const autoplay = useRef(Autoplay({ delay: 15000 }));
   const calculateEnergyConsumption = () => {
     let energyConsumption = 0;
     let traeger : Energietraeger[] = Energietraegers
@@ -117,7 +115,6 @@ function App() {
                 mx="auto"
                 withIndicators
                 height={"80vh"}
-                plugins={[autoplay.current]}
 
             >
               {
