@@ -34,8 +34,6 @@ function App() {
     data.push(traeger.name)
   })
 
-
-
   const [wohnungsflaeche, setWohnungsflaeche] = useState<number>();
 
   const [kwValue, setKwValue] = useState<number>(50)
@@ -70,14 +68,14 @@ function App() {
   return (
       <div style={{display: "flex", width: "100vw", flexDirection: "column", alignItems: "flex-start"}}>
         <Image  radius="md" src={tuLogo}  alt="Random image" style={{padding: "0px", marginBottom: "25px", width: "400px"}}/>
-        <h4 style={{fontSize: "30px", margin: "0px", paddingLeft: "25px"}}>Wieviel Energie verbraucht deine Heizung?</h4>
-        <h6 style={{fontSize: "25px", margin: "0px", paddingLeft: "25px"}}>Einfach selbst berechnen</h6>
+        <h4 style={{fontSize: "30px", margin: "0px", paddingLeft: "25px"}}>How much energy does your heating use?</h4>
+        <h6 style={{fontSize: "25px", margin: "0px", paddingLeft: "25px"}}>Simply calculate yourself</h6>
         <div style={{display: "flex", alignItems: "center", gap: "5vw", flexWrap: "wrap", padding: "25px"}}>
           <div style={{minWidth: "300px", marginTop: "50px", border: "1px solid lightgrey", borderRadius: "25px", padding: "25px"}}>
 
             <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginBottom: "1.25vh"}}>
 
-              <h6 style={{margin: "0px", fontSize: "16px"}}>Heizungstyp</h6>
+              <h6 style={{margin: "0px", fontSize: "16px"}}>Heater type</h6>
             </div>
 
             <Select
@@ -85,7 +83,7 @@ function App() {
             />
 
             <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh"}}>
-              <h6 style={{margin: "0px", fontSize: "16px"}}>Wohnungsfläche in m^2</h6>
+              <h6 style={{margin: "0px", fontSize: "16px"}}>Living space in square meters</h6>
             </div>
 
             <div style={{width: "100%", display: "flex", justifyContent: "flex-start", marginTop: "1.25vh", paddingBottom: "1.25vh"}}>
@@ -94,7 +92,7 @@ function App() {
             </div>
 
             <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh", marginBottom: "2.5vh"}}>
-              <h6 style={{margin: "0px", fontSize: "16px"}}>Energieverbrauch des Hauses (geringerer Kw/h wert auf der Skala im Eneergieausweis)</h6>
+              <h6 style={{margin: "0px", fontSize: "16px"}}>Energy consumption of the house (Endenergieverbrauch)</h6>
             </div>
 
             <Slider
@@ -131,7 +129,7 @@ function App() {
             />
 
             <div style={{width: "100%", display: "flex", justifyContent: "flex-end", marginTop: "5vh"}}>
-              <Button variant="filled" onClick={() => { calculateEnergyConsumption()}}>Berechnen</Button>
+              <Button variant="filled" onClick={() => { calculateEnergyConsumption()}}>Calculate</Button>
             </div>
 
 
