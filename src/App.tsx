@@ -20,6 +20,7 @@ import co2 from '../src/co2Factory.png'
 import img from '../src/img.png'
 import tuLogo from '../src/tuc_logo.gif'
 import oilFactory from '../src/oilFactory.png'
+import EnergieAusweis from '../src/Energieausweis.png'
 import {Energietraeger, Energietraegers, Result} from "./Config";
 import {Carousel} from '@mantine/carousel';
 
@@ -67,75 +68,78 @@ function App() {
   };
 
   return (
-      <div style={{display: "flex", width: "100vw", flexDirection: "column", alignItems: "flex-start", padding: "25px"}}>
+      <div style={{display: "flex", width: "100vw", flexDirection: "column", alignItems: "flex-start"}}>
         <Image  radius="md" src={tuLogo}  alt="Random image" style={{padding: "0px", marginBottom: "25px", width: "400px"}}/>
-        <h4 style={{fontSize: "30px", margin: "0px"}}>Wieviel Energie verbraucht deine Heizung?</h4>
-        <h6 style={{fontSize: "25px", margin: "0px"}}>Einfach selbst berechnen</h6>
+        <h4 style={{fontSize: "30px", margin: "0px", paddingLeft: "25px"}}>Wieviel Energie verbraucht deine Heizung?</h4>
+        <h6 style={{fontSize: "25px", margin: "0px", paddingLeft: "25px"}}>Einfach selbst berechnen</h6>
+        <div style={{display: "flex", alignItems: "center", gap: "5vw", flexWrap: "wrap", padding: "25px"}}>
+          <div style={{minWidth: "300px", marginTop: "50px", border: "1px solid lightgrey", borderRadius: "25px", padding: "25px"}}>
 
-        <div style={{minWidth: "300px", marginTop: "50px", border: "1px solid lightgrey", borderRadius: "25px", padding: "25px"}}>
+            <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginBottom: "1.25vh"}}>
 
-          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginBottom: "1.25vh"}}>
+              <h6 style={{margin: "0px", fontSize: "16px"}}>Heizungstyp</h6>
+            </div>
 
-            <h6 style={{margin: "0px", fontSize: "16px"}}>Heizungstyp</h6>
+            <Select
+                value={traegerValue} onChange={setTraegerValue} data={data}  placeholder="PLease Select"
+            />
+
+            <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh"}}>
+              <h6 style={{margin: "0px", fontSize: "16px"}}>Wohnungsfläche in m^2</h6>
+            </div>
+
+            <div style={{width: "100%", display: "flex", justifyContent: "flex-start", marginTop: "1.25vh", paddingBottom: "1.25vh"}}>
+              <TextInput style={{width: "100%"}} type={"number"} value={wohnungsflaeche} onChange={e => setWohnungsflaeche(parseInt(e.target.value))}>
+              </TextInput>
+            </div>
+
+            <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh", marginBottom: "2.5vh"}}>
+              <h6 style={{margin: "0px", fontSize: "16px"}}>Energieverbrauch des Hauses (geringerer Kw/h wert auf der Skala im Eneergieausweis)</h6>
+            </div>
+
+            <Slider
+                value={kwValue} onChange={setKwValue} onChangeEnd={setEndValue}
+                defaultValue={40}
+                marks={marks}
+                labelTransition="fade"
+                max={200}
+                size={2}
+                styles={(theme) => ({
+                  track: {
+                    backgroundColor:
+                        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
+                  },
+                  mark: {
+                    width: rem(6),
+                    height: rem(6),
+                    borderRadius: rem(6),
+                    transform: `translateX(-${rem(3)}) translateY(-${rem(2)})`,
+                    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
+                  },
+                  markFilled: {
+                    borderColor: theme.colors.blue[6],
+                  },
+                  markLabel: { fontSize: theme.fontSizes.xs, marginBottom: rem(5), marginTop: 0 },
+                  thumb: {
+                    height: rem(16),
+                    width: rem(16),
+                    backgroundColor: theme.white,
+                    borderWidth: rem(1),
+                    boxShadow: theme.shadows.sm,
+                  },
+                })}
+            />
+
+            <div style={{width: "100%", display: "flex", justifyContent: "flex-end", marginTop: "5vh"}}>
+              <Button variant="filled" onClick={() => { calculateEnergyConsumption()}}>Berechnen</Button>
+            </div>
+
+
+
           </div>
-
-          <Select
-              value={traegerValue} onChange={setTraegerValue} data={data}  placeholder="PLease Select"
-          />
-
-          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh"}}>
-            <h6 style={{margin: "0px", fontSize: "16px"}}>Wohnungsfläche in m^2</h6>
-          </div>
-
-          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", marginTop: "1.25vh", paddingBottom: "1.25vh"}}>
-            <TextInput style={{width: "100%"}} type={"number"} value={wohnungsflaeche} onChange={e => setWohnungsflaeche(parseInt(e.target.value))}>
-            </TextInput>
-          </div>
-
-          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh", marginBottom: "2.5vh"}}>
-            <h6 style={{margin: "0px", fontSize: "16px"}}>Energieverbrauch des Hauses (geringerer Kw/h wert auf der Skala im Eneergieausweis)</h6>
-          </div>
-
-          <Slider
-              value={kwValue} onChange={setKwValue} onChangeEnd={setEndValue}
-              defaultValue={40}
-              marks={marks}
-              labelTransition="fade"
-              max={200}
-              size={2}
-              styles={(theme) => ({
-                track: {
-                  backgroundColor:
-                      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
-                },
-                mark: {
-                  width: rem(6),
-                  height: rem(6),
-                  borderRadius: rem(6),
-                  transform: `translateX(-${rem(3)}) translateY(-${rem(2)})`,
-                  borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
-                },
-                markFilled: {
-                  borderColor: theme.colors.blue[6],
-                },
-                markLabel: { fontSize: theme.fontSizes.xs, marginBottom: rem(5), marginTop: 0 },
-                thumb: {
-                  height: rem(16),
-                  width: rem(16),
-                  backgroundColor: theme.white,
-                  borderWidth: rem(1),
-                  boxShadow: theme.shadows.sm,
-                },
-              })}
-          />
-
-          <div style={{width: "100%", display: "flex", justifyContent: "flex-end", marginTop: "2.5vh"}}>
-            <Button variant="outline" onClick={() => { calculateEnergyConsumption()}}>Berechnen</Button>
-          </div>
-
-
-
+          <Image  radius="md" src={EnergieAusweis} alt="Random image" style={{width: "500px"}}/>
         </div>
+
 
         <Modal
             opened={opened}
