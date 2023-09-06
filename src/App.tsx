@@ -2,7 +2,18 @@ import React, {useRef, useState} from 'react';
 
 import './App.css';
 import {useDisclosure} from "@mantine/hooks";
-import {Button, Image, Menu, Modal, Progress, TextInput, UnstyledButton} from "@mantine/core";
+import {
+  Button,
+  Image,
+  Menu,
+  Modal,
+  NativeSelect,
+  Progress,
+  rem, Select, SelectItem,
+  Slider,
+  TextInput,
+  UnstyledButton
+} from "@mantine/core";
 import forrest from '../src/forrest.png'
 import stackWood from '../src/stackWood.png'
 import co2 from '../src/co2Factory.png'
@@ -12,24 +23,44 @@ import oilFactory from '../src/oilFactory.png'
 import {Energietraeger, Energietraegers, Result} from "./Config";
 import {Carousel} from '@mantine/carousel';
 
-
 function App() {
-  const [heatingType, setHeatingType] = useState<Energietraeger>();
+
+  const [traeger, setTraeger] = useState<Energietraeger>()
+  const [traegerValue, setTraegerValue] = useState<string | null>("Please select");
+
+  const data : string[] = []
+  Energietraegers.forEach(traeger => {
+    data.push(traeger.name)
+  })
+
+
+
   const [wohnungsflaeche, setWohnungsflaeche] = useState<number>();
-  const [kwValue, setKwValue] = useState<number>()
+
+  const [kwValue, setKwValue] = useState<number>(50)
+  const [endValue, setEndValue] = useState(50);
 
   const [isVisible, setIsVisible] = useState(false);
+
   const fadeStyle = {
     opacity: isVisible ? 1 : 0,
     transition: 'opacity 0.5s ease-in-out',
   };
+
+  const marks = [
+    { value: 50, label: '50Kw' },
+    { value: 100, label: '100Kw' },
+    { value: 150, label: '150Kw' },
+  ];
+
   const [opened, { open, close }] = useDisclosure(false);
   const calculateEnergyConsumption = () => {
     let energyConsumption = 0;
     let traeger : Energietraeger[] = Energietraegers
     energyConsumption = kwValue! * wohnungsflaeche!
     traeger.forEach(elememt => {
-      if(heatingType!.name == elememt.name){
+      if(traegerValue == elememt.name){
+        setTraeger(elememt)
       }
     })
     open()
@@ -39,53 +70,64 @@ function App() {
       <div style={{display: "flex", width: "100vw", flexDirection: "column", alignItems: "flex-start", padding: "25px"}}>
         <Image  radius="md" src={tuLogo}  alt="Random image" style={{padding: "0px", marginBottom: "25px", width: "400px"}}/>
         <h4 style={{fontSize: "30px", margin: "0px"}}>Wieviel Energie verbraucht deine Heizung?</h4>
-        <h6 style={{fontSize: "25px", margin: "0px"}}>Einfach sebst berechnen</h6>
+        <h6 style={{fontSize: "25px", margin: "0px"}}>Einfach selbst berechnen</h6>
 
         <div style={{minWidth: "300px", marginTop: "50px", border: "1px solid lightgrey", borderRadius: "25px", padding: "25px"}}>
 
-          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center"}}>
+          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginBottom: "1.25vh"}}>
 
             <h6 style={{margin: "0px", fontSize: "16px"}}>Heizungstyp</h6>
-            <Menu shadow="md" width={200}>
-              <Menu.Target>
-                <Button>Auswählen</Button>
-              </Menu.Target>
-
-              <Menu.Dropdown>
-
-                {Energietraegers.map(traeger => {
-                  return <Menu.Item onClick={() => setHeatingType(traeger)}>
-                    {traeger.name}
-                  </Menu.Item>
-                })}
-              </Menu.Dropdown>
-            </Menu>
-
-
           </div>
 
-          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", borderBottom: "1px solid lightgrey", marginTop: "1.25vh", paddingBottom: "1.25vh"}}>
-            <TextInput style={{width: "100%"}} type={"text"} value={heatingType?.name}>
-            </TextInput>
-          </div>
+          <Select
+              value={traegerValue} onChange={setTraegerValue} data={data}  placeholder="PLease Select"
+          />
 
           <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh"}}>
             <h6 style={{margin: "0px", fontSize: "16px"}}>Wohnungsfläche in m^2</h6>
           </div>
 
-          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", borderBottom: "1px solid lightgrey", marginTop: "1.25vh", paddingBottom: "1.25vh"}}>
+          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", marginTop: "1.25vh", paddingBottom: "1.25vh"}}>
             <TextInput style={{width: "100%"}} type={"number"} value={wohnungsflaeche} onChange={e => setWohnungsflaeche(parseInt(e.target.value))}>
             </TextInput>
           </div>
 
-          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh"}}>
+          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh", marginBottom: "2.5vh"}}>
             <h6 style={{margin: "0px", fontSize: "16px"}}>Energieverbrauch des Hauses (geringerer Kw/h wert auf der Skala im Eneergieausweis)</h6>
           </div>
 
-          <div style={{width: "100%", display: "flex", justifyContent: "flex-start", borderBottom: "1px solid lightgrey", marginTop: "1.25vh", paddingBottom: "1.25vh"}}>
-            <TextInput  style={{width: "100%"}} type={"number"} value={kwValue} onChange={e => setKwValue(parseInt(e.target.value))}>
-            </TextInput>
-          </div>
+          <Slider
+              value={kwValue} onChange={setKwValue} onChangeEnd={setEndValue}
+              defaultValue={40}
+              marks={marks}
+              labelTransition="fade"
+              max={200}
+              size={2}
+              styles={(theme) => ({
+                track: {
+                  backgroundColor:
+                      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
+                },
+                mark: {
+                  width: rem(6),
+                  height: rem(6),
+                  borderRadius: rem(6),
+                  transform: `translateX(-${rem(3)}) translateY(-${rem(2)})`,
+                  borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
+                },
+                markFilled: {
+                  borderColor: theme.colors.blue[6],
+                },
+                markLabel: { fontSize: theme.fontSizes.xs, marginBottom: rem(5), marginTop: 0 },
+                thumb: {
+                  height: rem(16),
+                  width: rem(16),
+                  backgroundColor: theme.white,
+                  borderWidth: rem(1),
+                  boxShadow: theme.shadows.sm,
+                },
+              })}
+          />
 
           <div style={{width: "100%", display: "flex", justifyContent: "flex-end", marginTop: "2.5vh"}}>
             <Button variant="outline" onClick={() => { calculateEnergyConsumption()}}>Berechnen</Button>
@@ -120,7 +162,7 @@ function App() {
 
             >
               {
-                heatingType?.results.map(result => {
+                traeger?.results?.map((result: Result) => {
                   if(result === Result.ForrestToTakeCO2){
                     let co2menge = kwValue! * wohnungsflaeche! * 0.202
                     let humanYears = co2menge / 365 //human = 1kg co2 per day
