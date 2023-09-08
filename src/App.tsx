@@ -85,7 +85,7 @@ function App() {
         <div style={{display: "flex", alignItems: "center", gap: "5vw",justifyContent: "center", flexWrap: "wrap", width: "100vw", height: "80vh"}}>
           <div style={{minWidth: "250px",maxWidth: "95vw", marginTop: "50px",   padding: "25px 30px 30px 30px", backgroundColor: 'rgba(255,255,255)',  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <Image src={tuLogo}  alt="Random image"  style={{padding: "0px", marginBottom: "30px",width: "200px"}}/>
-            <h2 style={{marginBottom: "35px"}}>How much energy <br />does your heater consume? </h2>
+            <h2 style={{marginBottom: "35px"}}>How much energy does your heater consume? </h2>
 
             <Timeline active={active} bulletSize={24} lineWidth={2}>
               <Timeline.Item bullet={<TbEngine size={12} />} title="Heater Type">
