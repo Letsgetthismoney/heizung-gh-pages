@@ -8,10 +8,11 @@ import {
   Menu,
   Modal,
   NativeSelect,
+    Text,
   Progress,
   rem, Select, SelectItem,
   Slider,
-  TextInput,
+  TextInput, Timeline,
   UnstyledButton
 } from "@mantine/core";
 import forrest from '../src/forrest.png'
@@ -23,11 +24,21 @@ import oilFactory from '../src/oilFactory.png'
 import EnergieAusweis from '../src/Energieausweis.png'
 import {Energietraeger, Energietraegers, Result} from "./Config";
 import {Carousel} from '@mantine/carousel';
-
+import {
+  IconGitBranch,
+  IconGitPullRequest,
+  IconGitCommit,
+  IconMessageDots,
+  IconPower,
+  IconFilePower
+} from '@tabler/icons-react';
+import {SlCheck, SlEnergy, SlHome} from "react-icons/sl";
+import {FiTruck} from "react-icons/fi";
 function App() {
+  const [active, setActive] = useState<number>(0)
 
   const [traeger, setTraeger] = useState<Energietraeger>()
-  const [traegerValue, setTraegerValue] = useState<string | null>("Please select");
+  const [traegerValue, setTraegerValue] = useState<string | null>();
 
   const data : string[] = []
   Energietraegers.forEach(traeger => {
@@ -65,77 +76,95 @@ function App() {
     open()
   };
 
+  const handleKeyPress = (e: { key: string; }) => {
+    if (e.key === 'Enter' || e.key === 'Tab') {
+      // Perform your desired action here
+      setActive(2)
+      console.log(`Enter or Tab key pressed: ${e.key}`);
+    }
+  };
+
   return (
-      <div style={{display: "flex", width: "100vw", flexDirection: "column", alignItems: "flex-start"}}>
+      <div style={{display: "flex", width: "95vw", flexDirection: "column", alignItems: "flex-start", padding: "2.5vw"}}>
         <Image  radius="md" src={tuLogo}  alt="Random image" style={{padding: "0px", marginBottom: "25px", width: "400px"}}/>
-        <h4 style={{fontSize: "30px", margin: "0px", paddingLeft: "25px"}}>How much energy does your heating use?</h4>
-        <h6 style={{fontSize: "25px", margin: "0px", paddingLeft: "25px"}}>Simply calculate yourself</h6>
-        <div style={{display: "flex", alignItems: "center", gap: "5vw", flexWrap: "wrap", padding: "25px"}}>
-          <div style={{minWidth: "300px", marginTop: "50px", border: "1px solid lightgrey", borderRadius: "25px", padding: "25px"}}>
+        <h4 style={{fontSize: "30px", margin: "0px"}}>How much energy does your heating use?</h4>
+        <h6 style={{fontSize: "25px", margin: "0px"}}>Simply calculate yourself</h6>
+        <div style={{display: "flex",flexDirection: "column", alignItems: "center", gap: "5vw", flexWrap: "wrap", width: "95vw"}}>
+          <div style={{minWidth: "250px",maxWidth: "95vw", marginTop: "50px", border: "1px solid lightgrey", borderRadius: "25px", padding: "25px"}}>
 
-            <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginBottom: "1.25vh"}}>
+            <Timeline active={active} bulletSize={24} lineWidth={2}>
+              <Timeline.Item bullet={<FiTruck size={12} />} title="Heater Type">
+                {active >= 0 &&
+                    <Select
+                        value={traegerValue} onChange={(event) => {setTraegerValue(event); setActive(1)}} data={data}  placeholder="Please Select"
+                    />
+                }
+              </Timeline.Item>
 
-              <h6 style={{margin: "0px", fontSize: "16px"}}>Heater type</h6>
-            </div>
+              <Timeline.Item bullet={<SlHome size={12} />} title="Living space">
 
-            <Select
-                value={traegerValue} onChange={setTraegerValue} data={data}  placeholder="PLease Select"
-            />
+                {active >= 1 &&
+                    <TextInput onKeyDown={handleKeyPress}  style={{width: "100%"}} type={"number"} value={wohnungsflaeche} onChange={e => {setWohnungsflaeche(parseInt(e.target.value))}}>
+                    </TextInput>
+                }
 
-            <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh"}}>
-              <h6 style={{margin: "0px", fontSize: "16px"}}>Living space in square meters</h6>
-            </div>
+              </Timeline.Item>
 
-            <div style={{width: "100%", display: "flex", justifyContent: "flex-start", marginTop: "1.25vh", paddingBottom: "1.25vh"}}>
-              <TextInput style={{width: "100%"}} type={"number"} value={wohnungsflaeche} onChange={e => setWohnungsflaeche(parseInt(e.target.value))}>
-              </TextInput>
-            </div>
+              <Timeline.Item title="Energy consumption of the house (Endenergieverbrauch)" bullet={<SlEnergy size={12} />} lineVariant="dashed">
+                {active >= 2 &&
+                    <Slider
+                        value={kwValue} onChange={setKwValue} onChangeEnd={() => {setEndValue(kwValue); setActive(3)}}
+                        defaultValue={40}
+                        marks={marks}
+                        labelTransition="fade"
+                        max={200}
+                        size={2}
+                        style={{marginTop: "25px"}}
+                        styles={(theme) => ({
+                          track: {
+                            backgroundColor:
+                                theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
+                          },
+                          mark: {
+                            width: rem(6),
+                            height: rem(6),
+                            borderRadius: rem(6),
+                            transform: `translateX(-${rem(3)}) translateY(-${rem(2)})`,
+                            borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
+                          },
+                          markFilled: {
+                            borderColor: theme.colors.blue[6],
+                          },
+                          markLabel: { fontSize: theme.fontSizes.xs, marginBottom: rem(5), marginTop: 0 },
+                          thumb: {
+                            height: rem(16),
+                            width: rem(16),
+                            backgroundColor: theme.white,
+                            borderWidth: rem(1),
+                            boxShadow: theme.shadows.sm,
+                          },
+                        })}
+                    />
+                }
 
-            <div style={{width: "100%", display: "flex", justifyContent: "flex-start", gap: "2.5vw", alignItems: "center", marginTop: "2.5vh", marginBottom: "2.5vh"}}>
-              <h6 style={{margin: "0px", fontSize: "16px"}}>Energy consumption of the house (Endenergieverbrauch)</h6>
-            </div>
+              </Timeline.Item>
 
-            <Slider
-                value={kwValue} onChange={setKwValue} onChangeEnd={setEndValue}
-                defaultValue={40}
-                marks={marks}
-                labelTransition="fade"
-                max={200}
-                size={2}
-                styles={(theme) => ({
-                  track: {
-                    backgroundColor:
-                        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
-                  },
-                  mark: {
-                    width: rem(6),
-                    height: rem(6),
-                    borderRadius: rem(6),
-                    transform: `translateX(-${rem(3)}) translateY(-${rem(2)})`,
-                    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
-                  },
-                  markFilled: {
-                    borderColor: theme.colors.blue[6],
-                  },
-                  markLabel: { fontSize: theme.fontSizes.xs, marginBottom: rem(5), marginTop: 0 },
-                  thumb: {
-                    height: rem(16),
-                    width: rem(16),
-                    backgroundColor: theme.white,
-                    borderWidth: rem(1),
-                    boxShadow: theme.shadows.sm,
-                  },
-                })}
-            />
+              <Timeline.Item title="Calculate" bullet={<SlCheck size={12} />}>
+                {active >= 3 &&
+                    <div style={{width: "100%", display: "flex", justifyContent: "flex-end"}}>
+                      <Button variant="filled" onClick={() => { calculateEnergyConsumption()}}>Calculate</Button>
+                    </div>
 
-            <div style={{width: "100%", display: "flex", justifyContent: "flex-end", marginTop: "5vh"}}>
-              <Button variant="filled" onClick={() => { calculateEnergyConsumption()}}>Calculate</Button>
-            </div>
+                }
+
+              </Timeline.Item>
+            </Timeline>
 
 
 
           </div>
-          <Image  radius="md" src={EnergieAusweis} alt="Random image" style={{width: "500px"}}/>
+
+          <Image  radius="md" src={EnergieAusweis} alt="Random image" style={{minWidth: "300px", maxWidth: "500px"}}/>
         </div>
 
 
