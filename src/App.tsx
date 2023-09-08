@@ -34,6 +34,7 @@ import {
 } from '@tabler/icons-react';
 import {SlCheck, SlEnergy, SlHome} from "react-icons/sl";
 import {FiTruck} from "react-icons/fi";
+import {PiEngine, PiEngineFill} from "react-icons/pi";
 function App() {
   const [active, setActive] = useState<number>(0)
 
@@ -90,16 +91,24 @@ function App() {
         <h4 style={{fontSize: "30px", margin: "0px"}}>How much energy does your heating use?</h4>
         <h6 style={{fontSize: "25px", margin: "0px"}}>Simply calculate yourself</h6>
         <div style={{display: "flex",flexDirection: "column", alignItems: "center", gap: "5vw", flexWrap: "wrap", width: "95vw"}}>
-          <div style={{minWidth: "250px",maxWidth: "95vw", marginTop: "50px", border: "1px solid lightgrey", borderRadius: "25px", padding: "25px"}}>
+          <div style={{minWidth: "250px",maxWidth: "95vw", marginTop: "50px",  borderRadius: "25px", padding: "25px"}}>
 
             <Timeline active={active} bulletSize={24} lineWidth={2}>
-              <Timeline.Item bullet={<FiTruck size={12} />} title="Heater Type">
-                {active >= 0 &&
-                    <Select
-                        value={traegerValue} onChange={(event) => {setTraegerValue(event); setActive(1)}} data={data}  placeholder="Please Select"
-                    />
+              <Timeline.Item bullet={<PiEngine size={12} />} title="Heater Type">
+                {active >= 0 && <>
+                  <Select style={{marginTop: "10px"}}
+                      value={traegerValue} onChange={(event) => {setTraegerValue(event); setActive(1)}} data={data}  placeholder="Please Select"
+                  />
+                  {traegerValue == "Wood" &&
+                    <Select style={{marginTop: "15px"}} data={["Eiche", "Buche", "Erle", "Nadelholz"]} placeholder={"Type of Wood"}></Select>
+                  }
+                </>
+
+
+
                 }
               </Timeline.Item>
+
 
               <Timeline.Item bullet={<SlHome size={12} />} title="Living space">
 
