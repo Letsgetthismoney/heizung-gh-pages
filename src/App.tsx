@@ -1,16 +1,13 @@
-import React, {useRef, useState} from 'react';
+import React, { useState} from 'react';
 
 import './App.css';
 import {useDisclosure} from "@mantine/hooks";
 import {
   Button,
   Image,
-  Menu,
   Modal,
-  NativeSelect,
-    Text,
   Progress,
-  rem, Select, SelectItem,
+  rem, Select,
   Slider,
   TextInput, Timeline,
   UnstyledButton
@@ -24,17 +21,11 @@ import oilFactory from '../src/oilFactory.png'
 import EnergieAusweis from '../src/Energieausweis.png'
 import {Energietraeger, Energietraegers, Result} from "./Config";
 import {Carousel} from '@mantine/carousel';
-import {
-  IconGitBranch,
-  IconGitPullRequest,
-  IconGitCommit,
-  IconMessageDots,
-  IconPower,
-  IconFilePower
-} from '@tabler/icons-react';
+
 import {SlCheck, SlEnergy, SlHome} from "react-icons/sl";
-import {FiTruck} from "react-icons/fi";
-import {PiEngine, PiEngineFill} from "react-icons/pi";
+import {TbEngine} from "react-icons/tb";
+
+
 function App() {
   const [active, setActive] = useState<number>(0)
 
@@ -94,7 +85,7 @@ function App() {
           <div style={{minWidth: "250px",maxWidth: "95vw", marginTop: "50px",  borderRadius: "25px", padding: "25px"}}>
 
             <Timeline active={active} bulletSize={24} lineWidth={2}>
-              <Timeline.Item bullet={<PiEngine size={12} />} title="Heater Type">
+              <Timeline.Item bullet={<TbEngine size={12} />} title="Heater Type">
                 {active >= 0 && <>
                   <Select style={{marginTop: "10px"}}
                       value={traegerValue} onChange={(event) => {setTraegerValue(event); setActive(1)}} data={data}  placeholder="Please Select"
