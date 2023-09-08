@@ -16,11 +16,12 @@ import forrest from '../src/forrest.png'
 import stackWood from '../src/stackWood.png'
 import co2 from '../src/co2Factory.png'
 import img from '../src/img.png'
-import tuLogo from '../src/tuc_logo.gif'
+import tuLogo from '../src/logo200.gif'
 import oilFactory from '../src/oilFactory.png'
 import EnergieAusweis from '../src/Energieausweis.png'
 import {Energietraeger, Energietraegers, Result} from "./Config";
 import {Carousel} from '@mantine/carousel';
+import powerBackground from '../src/powerBackground-2.jpeg'
 
 import {SlCheck, SlEnergy, SlHome} from "react-icons/sl";
 import {TbEngine} from "react-icons/tb";
@@ -53,6 +54,7 @@ function App() {
     { value: 50, label: '50Kw' },
     { value: 100, label: '100Kw' },
     { value: 150, label: '150Kw' },
+    { value: 200, label: '200Kw' },
   ];
 
   const [opened, { open, close }] = useDisclosure(false);
@@ -77,12 +79,13 @@ function App() {
   };
 
   return (
-      <div style={{display: "flex", width: "95vw", flexDirection: "column", alignItems: "flex-start", padding: "2.5vw"}}>
-        <Image  radius="md" src={tuLogo}  alt="Random image" style={{padding: "0px", marginBottom: "25px", width: "400px"}}/>
-        <h4 style={{fontSize: "30px", margin: "0px"}}>How much energy does your heating use?</h4>
-        <h6 style={{fontSize: "25px", margin: "0px"}}>Simply calculate yourself</h6>
-        <div style={{display: "flex",flexDirection: "column", alignItems: "center", gap: "5vw", flexWrap: "wrap", width: "95vw"}}>
-          <div style={{minWidth: "250px",maxWidth: "95vw", marginTop: "50px",  borderRadius: "25px", padding: "25px"}}>
+      <div style={{display: "flex", width: "95vw", flexDirection: "column", alignItems: "flex-start", padding: "0px", height: "100vh"}}>
+        <Image src={powerBackground} style={{position:"absolute", width: "100vw",objectFit: "fill", zIndex: "-10"}} height={"100vh"} ></Image>
+
+        <div style={{display: "flex", alignItems: "center", gap: "5vw",justifyContent: "center", flexWrap: "wrap", width: "100vw", height: "80vh"}}>
+          <div style={{minWidth: "250px",maxWidth: "95vw", marginTop: "50px",   padding: "25px 30px 30px 30px", backgroundColor: 'rgba(255,255,255)',  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
+            <Image src={tuLogo}  alt="Random image"  style={{padding: "0px", marginBottom: "30px",width: "200px"}}/>
+            <h2 style={{marginBottom: "35px"}}>How much energy <br />does your heater consume? </h2>
 
             <Timeline active={active} bulletSize={24} lineWidth={2}>
               <Timeline.Item bullet={<TbEngine size={12} />} title="Heater Type">
@@ -117,7 +120,7 @@ function App() {
                         defaultValue={40}
                         marks={marks}
                         labelTransition="fade"
-                        max={200}
+                        max={250}
                         size={2}
                         style={{marginTop: "25px"}}
                         styles={(theme) => ({
@@ -164,8 +167,8 @@ function App() {
 
           </div>
 
-          <Image  radius="md" src={EnergieAusweis} alt="Random image" style={{minWidth: "300px", maxWidth: "500px"}}/>
         </div>
+
 
 
         <Modal
