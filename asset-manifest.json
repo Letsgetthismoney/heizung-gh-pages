@@ -1,10 +1,9 @@
 {
   "files": {
     "main.css": "/heizung-gh-pages/static/css/main.073c9b0a.css",
-    "main.js": "/heizung-gh-pages/static/js/main.c10f4669.js",
+    "main.js": "/heizung-gh-pages/static/js/main.62433018.js",
     "static/js/787.28cb0dcd.chunk.js": "/heizung-gh-pages/static/js/787.28cb0dcd.chunk.js",
     "static/media/powerBackground-2.jpeg": "/heizung-gh-pages/static/media/powerBackground-2.424a7c34dd2d4f04d651.jpeg",
-    "static/media/stackWood.png": "/heizung-gh-pages/static/media/stackWood.e0b0a8881a6fb22e04d3.png",
     "static/media/forrest.png": "/heizung-gh-pages/static/media/forrest.c2d6665b654b3f192486.png",
     "static/media/oilFactory.png": "/heizung-gh-pages/static/media/oilFactory.030424c014c8d45b47d5.png",
     "static/media/img.png": "/heizung-gh-pages/static/media/img.24dda706891faf982ea3.png",
@@ -12,11 +11,11 @@
     "static/media/co2Factory.png": "/heizung-gh-pages/static/media/co2Factory.26ddc21d6dd87e8504f8.png",
     "index.html": "/heizung-gh-pages/index.html",
     "main.073c9b0a.css.map": "/heizung-gh-pages/static/css/main.073c9b0a.css.map",
-    "main.c10f4669.js.map": "/heizung-gh-pages/static/js/main.c10f4669.js.map",
+    "main.62433018.js.map": "/heizung-gh-pages/static/js/main.62433018.js.map",
     "787.28cb0dcd.chunk.js.map": "/heizung-gh-pages/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.c10f4669.js"
+    "static/js/main.62433018.js"
   ]
 }
