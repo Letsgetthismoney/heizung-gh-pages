@@ -107,6 +107,10 @@ function App() {
                   {traegerValue == "Wood" &&
                     <Select style={{marginTop: "15px"}} data={["Eiche", "Buche", "Erle", "Nadelholz"]} placeholder={"Type of Wood"}></Select>
                   }
+
+                  {traegerValue == "Eletric Power" &&
+                      <Select style={{marginTop: "15px"}} data={["Own Grid", "German Grid", "Eu Grid", "Us Grid"]} placeholder={"Type of Grid"}></Select>
+                  }
                 </>
 
 
@@ -351,7 +355,8 @@ function App() {
                   if(result === Result.CompareForrestSizes){
                     let menge = kwValue! * wohnungsflaeche! * 0.202 * 0.17 * 0.001
                     return <Carousel.Slide>
-                      <div style={{height: "80vh", maxWidth: "100vw", display: "flex", padding: "0px", flexDirection: "column", justifyContent: "space-between"}}>
+                      {menge > 0.13 && <div style={{height: "80vh", maxWidth: "100vw", display: "flex", padding: "0px", flexDirection: "column", justifyContent: "space-between"}}>
+
 
                         <div style={{marginLeft: "5vw",  display: "flex", padding: "0px", flexDirection: "column",marginRight: "5vw"}}>
 
@@ -377,7 +382,36 @@ function App() {
                           />
                         </div>
 
-                      </div>
+                      </div>}
+                      {menge <= 0.13 && <div style={{height: "80vh", maxWidth: "100vw", display: "flex", padding: "0px", flexDirection: "column", justifyContent: "space-between"}}>
+
+
+                        <div style={{marginLeft: "5vw",  display: "flex", padding: "0px", flexDirection: "column",marginRight: "5vw"}}>
+
+                        <h6 style={{fontSize: "25px", margin: "0px", padding: "0px"}}>In Deutschland gibt es circa 11 Millionen Hektar Wald</h6>
+                        <h6 style={{fontSize: "25px", margin: "0px"}}>Pro Bundesbürger stehen also 0.13 Hektar Wald zur Verfügung</h6>
+                    <h6 style={{fontSize: "25px", margin: "0px"}}>Nur für Die Aufnahme des von deiner Heizung emmitierten Co2 alleine werden {menge.toString().slice(0, 4)} Hektar Wald benötigt</h6>
+                    <Button style={{width: "160px", marginTop: "25px"}} onClick={handlersForrestToTakeCo2.open}>Calculation Basis</Button>
+                    <Drawer opened={openedCalcForrestToTakeCo2} onClose={handlersForrestToTakeCo2.close} title="Authentication">
+                      <h2>AmountForrestToTakeCo2Drawer</h2>
+                    </Drawer>
+                  </div>
+
+                    <Image  radius="md" src={forrest} alt="Random image" style={{padding: "0px", margin: "0px"}}/>
+                    <div style={{position: "absolute", width: "80vw", margin: "10vw", bottom : "0px"}}>
+                      <Progress
+                          style={{width: "100%"}}
+                          size={24}
+                          sections={[
+                            { value: 100 / 0.13 * menge, color: 'darkred', label: "Your Heater"  },
+                            { value: 100, color: 'green', label: "available"}
+
+                          ]}
+                      />
+                    </div>
+
+                  </div>}
+
                     </Carousel.Slide>
                   }
                 })
