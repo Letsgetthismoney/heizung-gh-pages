@@ -3,13 +3,13 @@ import React, { useState} from 'react';
 import './App.css';
 import {useDisclosure} from "@mantine/hooks";
 import {
-  Button,
+  Button, Collapse, Drawer, Group,
   Image,
-  Modal,
+  Modal, NumberInput,
   Progress,
   rem, Select,
   Slider,
-  TextInput, Timeline,
+  TextInput, Timeline, Tooltip,
   UnstyledButton
 } from "@mantine/core";
 import forrest from '../src/forrest.png'
@@ -18,7 +18,6 @@ import co2 from '../src/co2Factory.png'
 import img from '../src/img.png'
 import tuLogo from '../src/logo200.gif'
 import oilFactory from '../src/oilFactory.png'
-import EnergieAusweis from '../src/Energieausweis.png'
 import {Energietraeger, Energietraegers, Result} from "./Config";
 import {Carousel} from '@mantine/carousel';
 import powerBackground from '../src/powerBackground-2.jpeg'
@@ -43,6 +42,9 @@ function App() {
   const [kwValue, setKwValue] = useState<number>(50)
   const [endValue, setEndValue] = useState(50);
 
+  const [openedCalcAmountOil, handlersAmountOil] = useDisclosure(false);
+  const [openedCalcForrestToTakeCo2, handlersForrestToTakeCo2] = useDisclosure(false);
+
   const [isVisible, setIsVisible] = useState(false);
 
   const fadeStyle = {
@@ -58,6 +60,15 @@ function App() {
   ];
 
   const [opened, { open, close }] = useDisclosure(false);
+
+
+  //Calcutlation Amount of Oil
+  const [kwToDieselFactor, setKwToDieselFactor] = useState<number | "">(9.8)
+  const [verbrauchLkw, setVerbrauchLkw] = useState<number | "">(35)
+  const [distanceBM, setDistanceBM] = useState<number | "">(645)
+  const [opendQuellenAmountOil, {toggle}] = useDisclosure(false)
+
+
   const calculateEnergyConsumption = () => {
     let energyConsumption = 0;
     let traeger : Energietraeger[] = Energietraegers
@@ -85,7 +96,7 @@ function App() {
         <div style={{display: "flex", alignItems: "center", gap: "5vw",justifyContent: "center", flexWrap: "wrap", width: "100vw", height: "80vh"}}>
           <div style={{minWidth: "250px",maxWidth: "95vw", marginTop: "50px",   padding: "25px 30px 30px 30px", backgroundColor: 'rgba(255,255,255)',  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
             <Image src={tuLogo}  alt="Random image"  style={{padding: "0px", marginBottom: "30px",width: "200px"}}/>
-            <h2 style={{marginBottom: "35px"}}>How much energy does your heater consume? </h2>
+            <h2 style={{marginBottom: "35px"}}>How much energy does your heater consume?</h2>
 
             <Timeline active={active} bulletSize={24} lineWidth={2}>
               <Timeline.Item bullet={<TbEngine size={12} />} title="Heater Type">
@@ -112,6 +123,7 @@ function App() {
                 }
 
               </Timeline.Item>
+
 
               <Timeline.Item title="Energy consumption of the house (Endenergieverbrauch)" bullet={<SlEnergy size={12} />} lineVariant="dashed">
                 {active >= 2 &&
@@ -203,6 +215,9 @@ function App() {
                     return <Carousel.Slide>
                       <div style={{height: "100vh", maxWidth: "100vw", display: "flex", padding: "0px", flexDirection: "column", justifyContent: "space-between"}}>
 
+                        <h4 style={{fontSize: "25px"}}>
+                          Deine Heizung verbraucht pro Jahr {kwValue! * wohnungsflaeche!} Kilowattstunden Energie
+                        </h4>
 
                         <div style={{marginLeft: "5vw"}}>
                           <h6 style={{fontSize: "25px", margin: "0px"}}></h6>
@@ -234,16 +249,83 @@ function App() {
                   }
                   if(result === Result.AmountOfOil){
 
-                    let menge = kwValue! * wohnungsflaeche! / 9.8
+                    let menge = kwValue! * wohnungsflaeche! / 10
                     let example = menge / 35 * 100 / 505
 
                     return <Carousel.Slide>
                       <div style={{height: "80vh", maxWidth: "100vw", display: "flex", padding: "0px", flexDirection: "column", justifyContent: "space-between"}}>
 
                         <div style={{marginLeft: "5vw",  display: "flex", padding: "0px", flexDirection: "column",}}>
-                          <h6 style={{fontSize: "25px", margin: "0px", padding: "0px"}}>Das entspricht einer Menge von {parseInt(menge.toString())} Liter Erdöl</h6>
-                          <h6 style={{fontSize: "25px", margin: "0px"}}>Ein Lkw könnte mit dieser Menge {parseInt(example.toString())} mal zwischen Berlin und München hin und her fahren</h6>
+
+
+                          {typeof kwToDieselFactor == "number" && typeof verbrauchLkw == "number" && typeof distanceBM == "number" &&
+                              <h6 style={{fontSize: "25px", margin: "0px", padding: "0px"}}>Das entspricht einer Menge von {parseInt((kwValue! * wohnungsflaeche! / kwToDieselFactor!).toString())} Liter Erdöl</h6>
+                          }
+                          {typeof kwToDieselFactor == "number" && typeof verbrauchLkw == "number" && typeof distanceBM == "number" &&
+                              <h6 style={{fontSize: "25px", margin: "0px"}}>Ein Lkw könnte mit dieser Menge {(kwValue! * wohnungsflaeche! / kwToDieselFactor / verbrauchLkw! * 100 / distanceBM).toString().slice(0,5)} mal zwischen Berlin und München hin und her fahren</h6>
+                          }
+                          <Button style={{width: "160px", marginTop: "25px"}} onClick={handlersAmountOil.open}>Calculation Basis</Button>
+                          <Drawer opened={openedCalcAmountOil} onClose={handlersAmountOil.close} title="AmountOilDrawer">
+                            <h2>Calculation Basis</h2>
+                            <h3>Formel:</h3>
+                            <h4>EnergievebrauchHeizung * WohnungsGröße / KilowattstundenAufLiterDiesel / VerbrauchLkwAuf100Kilometer * 100 / DistanzBerlinMünchen </h4>
+
+                            <div style={{display: "flex", justifyContent : "space-between", alignItems: "center", flexWrap: "wrap", borderBottom: "1px solid lightgrey"}}>
+                              <p>Es wird angenommen, dass ein Liter Diesel</p>
+                                <NumberInput
+                                    defaultValue={0.1}
+                                    precision={1}
+                                    min={0}
+                                    step={0.1}
+                                    max={100}
+                                    stepHoldDelay={500}
+                                    stepHoldInterval={0.1}
+                                    style={{width: "70px"}} value={kwToDieselFactor} onChange={setKwToDieselFactor} />
+
+                              <p>Kilowattstunden Energie erzeugt.</p>
+                            </div>
+                            <div style={{display: "flex", justifyContent : "flex-start", alignItems: "center", flexWrap: "wrap", borderBottom: "1px solid lightgrey"}}>
+                              <p>Es wird angenommen, dass ein Lkw im Durchschnitt</p>
+                              <NumberInput stepHoldDelay={500}
+                                           stepHoldInterval={1} style={{width: "70px"}} value={verbrauchLkw} onChange={setVerbrauchLkw} />
+                              <p>Liter Diesel auf 100 Kilometer Strecke verbraucht.</p>
+                            </div>
+
+                            <div style={{display: "flex", justifyContent : "flex-start", alignItems: "center", flexWrap: "wrap", borderBottom: "1px solid lightgrey"}}>
+                              <p>Es wird angenommen, dass die Distanz zwischen Berlin und München</p>
+                              <NumberInput stepHoldDelay={500}
+                                           stepHoldInterval={1}  style={{width: "70px"}} value={distanceBM} onChange={setDistanceBM} />
+                              <p style={{marginLeft: "20px"}}>Kilometer beträgt</p>
+                            </div>
+
+                            <h3>Berechnung:</h3>
+                            <h4>{kwValue!} * {wohnungsflaeche!} / {kwToDieselFactor!} / {verbrauchLkw!} * 100 / {distanceBM} = </h4>
+                            {typeof kwToDieselFactor == "number" && typeof verbrauchLkw == "number" && typeof distanceBM == "number" &&
+                                <h4>{(kwValue! * wohnungsflaeche! / kwToDieselFactor / verbrauchLkw! * 100 / distanceBM).toString().slice(0,5)}</h4>
+                            }
+                            <div style={{width: "100%"}}>
+                              {!(verbrauchLkw == 35 && kwToDieselFactor == 9.8 && distanceBM == 645) && <Button onClick={() => {
+                                setDistanceBM(645);
+                                setVerbrauchLkw(35)
+                                setKwToDieselFactor(9.8)
+                              }}>Set Default Values</Button>}
+                            </div>
+
+                            <Button onClick={toggle}>See sources</Button>
+                            <Collapse in={opendQuellenAmountOil}>
+                              <div style={{width: "100%"}}>
+                                <p style={{wordWrap: "break-word", width: "100%",
+                                  wordBreak: "break-all"}}>https://nachhaltigmobil.schule/leistung-energie-verbrauch/#</p>
+                                <p style={{wordWrap: "break-word", width: "100%",
+                                  wordBreak: "break-all"}}>https://fleetgo.de/kb/lkw/verbrauch-von-lkw/#:~:text=Im%20Durchschnitt%20liegt%20der%20Verbrauch,einer%20geringeren%20Ladung%20verbrauchen%20weniger.</p>
+                                <p style={{wordWrap: "break-word", width: "100%",
+                                  wordBreak: "break-all"}}>https://www.google.com/maps/dir/Berlin/München/@50.297702,9.9356688,7z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x47a84e373f035901:0x42120465b5e3b70!2m2!1d13.404954!2d52.5200066!1m5!1m1!1s0x479e75f9a38c5fd9:0x10cb84a7db1987d!2m2!1d11.5819805!2d48.1351253!3e0?entry=ttu</p>
+                              </div>
+                            </Collapse>
+                          </Drawer>
                         </div>
+
+
 
                         <Image  radius="md" src={oilFactory}  alt="Random image" style={{padding: "0px", margin: "0px"}}/>
                       </div>
@@ -276,7 +358,10 @@ function App() {
                           <h6 style={{fontSize: "25px", margin: "0px", padding: "0px"}}>In Deutschland gibt es circa 11 Millionen Hektar Wald</h6>
                           <h6 style={{fontSize: "25px", margin: "0px"}}>Pro Bundesbürger stehen also 0.13 Hektar Wald zur Verfügung</h6>
                           <h6 style={{fontSize: "25px", margin: "0px"}}>Nur für Die Aufnahme des von deiner Heizung emmitierten Co2 alleine werden jedoch schon {menge.toString().slice(0, 4)} Hektar Wald benötigt</h6>
-
+                          <Button style={{width: "160px", marginTop: "25px"}} onClick={handlersForrestToTakeCo2.open}>Calculation Basis</Button>
+                          <Drawer opened={openedCalcForrestToTakeCo2} onClose={handlersForrestToTakeCo2.close} title="Authentication">
+                            <h2>AmountForrestToTakeCo2Drawer</h2>
+                          </Drawer>
                         </div>
 
                         <Image  radius="md" src={forrest} alt="Random image" style={{padding: "0px", margin: "0px"}}/>
