@@ -29,7 +29,7 @@ export const appSlice =createSlice(
                 if(action.payload.energyType === "Gas"){
                     state.config.kwToCo2Value = 202
                 }
-                if(action.payload.energyType == "Oil"){
+                if(action.payload.energyType === "Oil"){
                     state.config.kwToCo2Value = 266
                 }
                 if(action.payload.energyType === "Electric (GE)"){
