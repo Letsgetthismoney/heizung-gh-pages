@@ -82,6 +82,42 @@ export const OilUi = ({kwValue, wohnungsflaeche}: {kwValue:number, wohnungsflaec
                 </Collapse>
             </Drawer>
         </div>
-        <Image  radius="md" src={oilFactory}  alt="Random image" style={{padding: "0px", margin: "0px"}}/>
     </div>
 }
+
+interface CarouselProps {
+    items: React.ReactNode[];
+}
+
+const Carousel: React.FC<CarouselProps> = ({ items }) => {
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    const nextSlide = () => {
+        setCurrentSlide((prevSlide) => (prevSlide + 1) % items.length);
+    };
+
+    const prevSlide = () => {
+        setCurrentSlide((prevSlide) =>
+            prevSlide === 0 ? items.length - 1 : prevSlide - 1
+        );
+    };
+
+    return (
+        <div className="carousel">
+            <button onClick={prevSlide}>Previous</button>
+            <div className="carousel-content">
+                {items.map((item, index) => (
+                    <div
+                        key={index}
+                        className={`carousel-item ${
+                            index === currentSlide ? 'active' : ''
+                        }`}
+                    >
+                        {item}
+                    </div>
+                ))}
+            </div>
+            <button onClick={nextSlide}>Next</button>
+        </div>
+    );
+};
