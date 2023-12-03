@@ -1,4 +1,4 @@
-import {Button, Collapse, Drawer, Image, NumberInput, Progress, RingProgress, Text} from "@mantine/core";
+import {Button, Drawer, NumberInput} from "@mantine/core";
 import React, {useState} from "react";
 import {useDisclosure} from "@mantine/hooks";
 import {useAppSelector} from "../Store";
@@ -23,7 +23,6 @@ export const ForrestUi = ({kwPerYear, energyType}: {kwPerYear:number, energyType
 
 
     const [co2IntakePerHectarPerYearInKg, setco2IntakePerHectarPerYearInKg] = useState<number>(6000)
-    const [opendQuellen, {toggle}] = useDisclosure(false)
 
     const state = useAppSelector(selectApp)
 

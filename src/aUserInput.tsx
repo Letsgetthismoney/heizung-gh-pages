@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {Button, Drawer, Image, NumberInput, Select, Slider, Tooltip} from "@mantine/core";
+import {Button, Drawer, Image, NumberInput, Select, Slider} from "@mantine/core";
 
-import { Stepper, Group, TextInput, PasswordInput, Code } from '@mantine/core';
+import { Stepper, Group, Code } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {useAppDispatch} from "./Store";
 import {Form, setAppForm} from "./state";

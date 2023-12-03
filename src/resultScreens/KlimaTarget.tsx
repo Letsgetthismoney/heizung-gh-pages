@@ -1,15 +1,14 @@
-import React, {useState} from "react";
+import React from "react";
 import {useDisclosure} from "@mantine/hooks";
-import {Button, Drawer, Image, RingProgress, Text} from "@mantine/core";
+import {Button, Drawer, RingProgress, Text} from "@mantine/core";
 import target from "./target.png"
 import {useAppSelector} from "../Store";
 import {selectApp} from "../state";
 
-export const KlimaTarget = ({kwPerYear, energyType}: { kwPerYear: number, energyType: string }) => {
+export const KlimaTarget = () => {
 
     const selectState = useAppSelector(selectApp)
 
-    const [opendQuellen, {toggle}] = useDisclosure(false)
     const [opened, handler] = useDisclosure(false);
 
 

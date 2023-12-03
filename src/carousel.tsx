@@ -3,7 +3,6 @@ import React, {useState} from "react";
 import {ForrestUi} from "./resultScreens/forrest";
 import {useAppSelector} from "./Store";
 import {selectApp} from "./state";
-import {Button, RingProgress, Text} from "@mantine/core";
 import {KlimaTarget} from "./resultScreens/KlimaTarget";
 import {Compare} from "./resultScreens/Compare";
 
@@ -67,7 +66,7 @@ export const ReactSimplyCarouselExample = ({kwPerYear}: {kwPerYear:number}) =>  
             >
                 {/* here you can also pass any other element attributes. Also, you can use your custom components as slides */}
                 <div style={{ width: 800, height: 400, background: 'white' }}>
-                    <KlimaTarget kwPerYear={kwPerYear} energyType={state.config!.energyType}></KlimaTarget>
+                    <KlimaTarget></KlimaTarget>
 
                 </div>
                 <div style={{ width: 800, height: 300, }}>
