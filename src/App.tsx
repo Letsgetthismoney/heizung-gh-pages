@@ -5,7 +5,7 @@ import {
   Image,
   UnstyledButton
 } from "@mantine/core";
-import powerBackground from '../src/powerBackground-2.jpeg'
+import powerBackground from './powerBackground-2.jpeg';
 import {ReactSimplyCarouselExample} from "./carousel";
 import { UserInput} from "./aUserInput";
 import {useAppDispatch, useAppSelector} from "./Store";
