@@ -19,7 +19,7 @@ export const KlimaTarget = () => {
     const max = 100 - min
     console.log(verhaelntiss)
 
-    return <div style={{display: "flex", flexDirection: "row", padding: "20px"}}>
+    return <div style={{display: "flex", flexDirection: "row", padding: "20px", alignItems: "center", height: "100%"}}>
         <img src={target} style={{width: "200px"}}/>
         <div>
             <h6 style={{fontSize: "20px"}}>To challenge the targets of Paris, each citizien needs to reduce his own Co2

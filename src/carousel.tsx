@@ -58,21 +58,21 @@ export const ReactSimplyCarouselExample = ({kwPerYear}: {kwPerYear:number}) =>  
                     {
                         itemsToShow: 1,
                         itemsToScroll: 1,
-                        minWidth: 768,
+                        minWidth: 968,
                     },
                 ]}
                 speed={400}
                 easing="linear"
             >
                 {/* here you can also pass any other element attributes. Also, you can use your custom components as slides */}
-                <div style={{ width: 800, height: 400, background: 'white' }}>
+                <div style={{ width: 1000, height: 500, background: 'white' }}>
                     <KlimaTarget></KlimaTarget>
 
                 </div>
-                <div style={{ width: 800, height: 300, }}>
+                <div style={{ width: 1000, height: 500, }}>
                     <ForrestUi kwPerYear={kwPerYear} energyType={state.config!.energyType}></ForrestUi>
                 </div>
-                <div style={{ width: 800, height: 300 }}>
+                <div style={{ width: 1000, height: 500 }}>
                     <Compare></Compare>
                 </div>
             </ReactSimplyCarousel>

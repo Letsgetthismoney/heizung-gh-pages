@@ -84,25 +84,29 @@ export const ForrestUi = ({kwPerYear, energyType}: {kwPerYear:number, energyType
 
             <a target="_blank" href={"https://www.forestresearch.gov.uk/tools-and-resources/fthr/biomass-energy-resources/reference-biomass/facts-figures/carbon-emissions-of-different-fuels/"}>https://www.forestresearch.gov.uk/tools-and-resources/fthr/biomass-energy-resources/reference-biomass/facts-figures/carbon-emissions-of-different-fuels/</a>
 
+            <p>
+                Umweltbundesamt ( at the complete bottom ;) )
+            </p>
+
+            <a target="_blank" href={"https://www.umweltbundesamt.de/sites/default/files/medien/479/publikationen/cc_28-2022_emissionsfaktoren-brennstoffe_bf.pdf"}>https://www.umweltbundesamt.de/sites/default/files/medien/479/publikationen/cc_28-2022_emissionsfaktoren-brennstoffe_bf.pdf</a>
+
         </>
     }
 
     return <>
-            <div style={{height: "80vh", maxWidth: "100vw", display: "flex", padding: "0px", flexDirection: "column", justifyContent: "space-between"}}>
-                <div style={{marginTop: "50px",  display: "flex", padding: "0px", flexDirection: "column",marginRight: "5vw", }}>
-                    <div style={{padding: "20px", display: "flex", flexDirection: "column", width: "100%"}}>
+            <div style={{height: "100%", maxWidth: "100vw", display: "flex", padding: "0px", flexDirection: "column", justifyContent: "space-between"}}>
+                <div style={{padding: "20px", display: "flex", flexDirection: "column", width: "100%", height: "100%", justifyContent: "center"}}>
                         <h6 style={{fontSize: "20px", marginLeft: "0px",marginTop:"0px",marginBottom:"20px", padding: "0px"}}>In Germany, there are approximately 11 million hectares of forrest.</h6>
                         <h6 style={{fontSize: "20px", marginLeft: "0px",marginTop:"0px",marginBottom:"20px"}}>This means that for each German citizen, there are <span style={{color: "green"}}>0.13 hectares</span> of forrest.</h6>
                         <h6 style={{fontSize: "20px", marginLeft: "0px",marginTop:"0px",marginBottom:"20px"}}>Just to absorb the CO2 emitted by your heating system, <span style={{color: "red"}}>{(kwPerYear * kwToCo2Factor / 1000 / co2IntakePerHectarPerYearInKg!).toString().slice(0,4)} hectares</span> of forrest are already needed.</h6>
-                        <Button style={{width: "160px",alignSelf: "flex-end"}} onClick={handlersForrestToTakeCo2.open}>See Calculation</Button>
-                    </div>
+                        <Button style={{alignSelf: "flex-end", justifySelf: "flex-end", marginRight: "30px"}} onClick={handlersForrestToTakeCo2.open}>See Calculation</Button>
+                </div>
 
                     <Drawer opened={openedCalcForrestToTakeCo2} onClose={handlersForrestToTakeCo2.close}>
                         <DrawerContent></DrawerContent>
                     </Drawer>
 
                 </div>
-            </div>
     </>
 }
 
