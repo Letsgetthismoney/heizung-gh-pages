@@ -74,7 +74,7 @@ export const UserInput = () => {
             <Image src={powerBackground} style={{width: "200px",objectFit: "fill", zIndex: "-10", marginBottom: "50px"}}></Image>
             <Stepper active={active}>
                 <Stepper.Step label="Energy Type" description="used for Calculations">
-                    <Select label="Energy Type" {...form.getInputProps('energyType')} data={['Oil', 'Gas', 'Wood', 'Electric (GE)', 'Electric (EU)']}></Select>
+                    <Select label="Energy Type" {...form.getInputProps('energyType')} data={['Oil', 'Gas', 'Wood Pellets','LPG', 'Electric (GE)', 'Electric (EU)']}></Select>
                 </Stepper.Step>
 
                 <Stepper.Step label="Apartment Size" description="In Square Meters">

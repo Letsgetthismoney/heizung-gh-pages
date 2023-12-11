@@ -29,8 +29,11 @@ export const appSlice =createSlice(
                 if(action.payload.energyType === "Gas"){
                     state.config.kwToCo2Value = 202
                 }
+                if(action.payload.energyType === "LPG"){
+                    state.config.kwToCo2Value = 230
+                }
                 if(action.payload.energyType === "Oil"){
-                    state.config.kwToCo2Value = 266
+                    state.config.kwToCo2Value = 260
                 }
                 if(action.payload.energyType === "Electric (GE)"){
                     state.config.kwToCo2Value = 411
@@ -38,11 +41,8 @@ export const appSlice =createSlice(
                 if(action.payload.energyType === "Electric (EU)"){
                     state.config.kwToCo2Value = 202
                 }
-                if(action.payload.energyType === "Wood"){
-                    state.config.kwToCo2Value = 202
-                }
-                if(action.payload.energyType === "Gas"){
-                    state.config.kwToCo2Value = 202
+                if(action.payload.energyType === "Wood Pellets"){
+                    state.config.kwToCo2Value = 23
                 }
             },
             backToConfig: (state) => {

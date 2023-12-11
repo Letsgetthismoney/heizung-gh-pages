@@ -18,7 +18,8 @@ export const ForrestUi = ({kwPerYear, energyType}: {kwPerYear:number, energyType
                     energyType === "Oil" ? 266 :
                     energyType === "Electric (GE)" ? 411 :
                     energyType === "Electric (EU)" ? 226 :
-                        energyType === "Wood" ? 340 : -1
+                        energyType === "LPG" ? 230:
+                        energyType === "Wood Pellets" ? 23 :-1
     )
 
 
@@ -89,6 +90,12 @@ export const ForrestUi = ({kwPerYear, energyType}: {kwPerYear:number, energyType
             </p>
 
             <a target="_blank" href={"https://www.umweltbundesamt.de/sites/default/files/medien/479/publikationen/cc_28-2022_emissionsfaktoren-brennstoffe_bf.pdf"}>https://www.umweltbundesamt.de/sites/default/files/medien/479/publikationen/cc_28-2022_emissionsfaktoren-brennstoffe_bf.pdf</a>
+
+            <p>
+              effizienzhaus-online
+            </p>
+
+            <a target="_blank" href={"https://www.effizienzhaus-online.de/heizung-energietraeger-und-klimabilanz/"}>https://www.effizienzhaus-online.de/heizung-energietraeger-und-klimabilanz/</a>
 
         </>
     }

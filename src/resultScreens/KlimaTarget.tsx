@@ -15,8 +15,18 @@ export const KlimaTarget = () => {
 
 
     const verhaelntiss = selectState.config!.kwValue * selectState.config!.apartmentSize * selectState.config!.kwToCo2Value / 1000 / 1000
-    const min = 1 / verhaelntiss * 100
-    const max = 100 - min
+    let min : number = -1
+    let max: number = -1
+    if(verhaelntiss >= 1){
+         min = 1 / verhaelntiss * 100
+         max = 100 - min
+    }
+    if(verhaelntiss < 1) {
+        min = 100 * verhaelntiss
+        max = 100 - min
+    }
+
+
     console.log(verhaelntiss)
 
     return <div style={{display: "flex", flexDirection: "row", padding: "20px", alignItems: "center", height: "100%"}}>
@@ -31,12 +41,13 @@ export const KlimaTarget = () => {
                 thickness={20}
                 label={
                     <Text size="xs" ta="center">
-                        Overflow by your heating system
+                        {verhaelntiss >= 1 && "Co2 overflow by your heating system"}
+                        {verhaelntiss < 1 && "Co2 budget left"}
                     </Text>
                 }
                 sections={[
-                    {value: min, color: 'green'},
-                    {value: max, color: 'red'},
+                    {value: min, color: verhaelntiss < 1 ? 'red' : 'green'},
+                    {value: max, color: verhaelntiss < 1 ? 'green' : 'red'},
 
                 ]}
             />
