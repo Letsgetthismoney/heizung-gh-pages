@@ -31,7 +31,7 @@ function App() {
               selectState.status === "result" && selectState.config?.apartmentSize &&  <div style={{display: "flex", alignItems: "center", gap: "5vw",justifyContent: "center", flexWrap: "wrap", width: "100vw", height: "80vh"}}>
                   <div style={{minWidth: "250px",maxWidth: "80vw", marginTop: "50px",   padding: "25px 30px 30px 30px", backgroundColor: 'rgba(255,255,255)',  boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
                       <UnstyledButton style={{borderBottom: "1px solid lightgrey"}} onClick={() => dispatch(backToConfig())}>Back</UnstyledButton>
-                      <h6 style={{fontSize: "20px", marginLeft: "90px", marginTop: "10px", marginBottom: "10px", marginRight: "90px"}}>Your heating system using {selectState.config.energyType} emits {parseInt((selectState.config.kwValue * selectState.config.apartmentSize * selectState.config.kwToCo2Value! / 1000).toString())} kilograms of CO2 annually</h6>
+                      <h6 style={{fontSize: "20px", marginLeft: "90px", marginTop: "10px", marginBottom: "10px", marginRight: "90px"}}>Your heating system using {selectState.config.energyType} emits approximately {parseInt((selectState.config.kwValue * selectState.config.apartmentSize * selectState.config.kwToCo2Value! / 1000).toString())} kilograms of CO2 annually</h6>
                       <ReactSimplyCarouselExample kwPerYear={selectState.config?.apartmentSize * selectState.config?.kwValue}></ReactSimplyCarouselExample>
                   </div>
               </div>

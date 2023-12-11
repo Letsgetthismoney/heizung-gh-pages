@@ -29,8 +29,11 @@ export const ForrestUi = ({kwPerYear, energyType}: {kwPerYear:number, energyType
     const DrawerContent = () => {
         return <>
             <h2>Calculation Basis</h2>
+            <h3>Whats going on?</h3>
+            <p>This component calculates the forest size needed to absorb CO2 emissions from an apartment's energy consumption. Users can input factors like CO2 emissions per kilowatt-hour and CO2 intake per hectare per year to estimate the forest size required. Sources for data and formulas are provided for credibility.</p>
             <h3>Formula:</h3>
             <p>NeededForrestSizeToBindCo2EmissionInHectar = KwEnergyConsumptionPerYearPerSquaremeter * Apartmentsize * kwToCo2InGramsFactor / 1000 / co2IntakePerHectarPerYearInKg</p>
+            <p>src: moi</p>
             <div style={{display: "flex", justifyContent : "space-between", alignItems: "center", flexWrap: "wrap", borderBottom: "1px solid lightgrey"}}>
 
                 </div>
@@ -75,22 +78,24 @@ export const ForrestUi = ({kwPerYear, energyType}: {kwPerYear:number, energyType
                 <a target="_blank" href={"https://www.wald.de/waldwissen/wie-viel-kohlendioxid-co2-speichert-der-wald-bzw-ein-baum/#:~:text=Faustformel%3A%20Ein%20Hektar%20Wald%20%E2%80%9Cspeichert%E2%80%9D%20pro%20Jahr%20%C3%BCber,%E2%80%9Cspeichern%E2%80%9D%20ist%20chemisch%20nicht%20richtig%20%E2%80%93%20siehe%20Fotosynthese%29."}>
                     https://www.wald.de/waldwissen/wie-viel-kohlendioxid-co2-speichert-der-wald-bzw-ein-baum/#:~:text=Faustformel%3A%20Ein%20Hektar%20Wald%20%E2%80%9Cspeichert%E2%80%9D%20pro%20Jahr%20%C3%BCber,%E2%80%9Cspeichern%E2%80%9D%20ist%20chemisch%20nicht%20richtig%20%E2%80%93%20siehe%20Fotosynthese%29.
                 </a>
+            <p>
+                Forest Research (FR)
+            </p>
+
+            <a target="_blank" href={"https://www.forestresearch.gov.uk/tools-and-resources/fthr/biomass-energy-resources/reference-biomass/facts-figures/carbon-emissions-of-different-fuels/"}>https://www.forestresearch.gov.uk/tools-and-resources/fthr/biomass-energy-resources/reference-biomass/facts-figures/carbon-emissions-of-different-fuels/</a>
+
         </>
     }
 
     return <>
             <div style={{height: "80vh", maxWidth: "100vw", display: "flex", padding: "0px", flexDirection: "column", justifyContent: "space-between"}}>
-                <div style={{marginTop: "50px",  display: "flex", padding: "0px", flexDirection: "column",marginRight: "5vw"}}>
-                    <div style={{padding: "20px"}}>
-                        <h6 style={{fontSize: "20px", margin: "0px", padding: "0px"}}>In Germany, there are approximately 11 million hectares of forrest.</h6>
-                        <h6 style={{fontSize: "20px", margin: "0px"}}>This means that for each German citizen, there are <span style={{color: "green"}}>0.13 hectares</span> of forrest.</h6>
-                        <h6 style={{fontSize: "20px", margin: "0px", padding: "0px"}}>One hectare of forrest can absorb 6 tons of CO2 each year.</h6>
-                        <h6 style={{fontSize: "20px", margin: "0px"}}>Just to absorb the CO2 emitted by your heating system, <span style={{color: "red"}}>{(kwPerYear * kwToCo2Factor / 1000 / co2IntakePerHectarPerYearInKg!).toString().slice(0,4)} hectares</span> of forrest are already needed.</h6>
-                        <Button style={{width: "160px", marginTop: "100px"}} onClick={handlersForrestToTakeCo2.open}>See Calculation</Button>
+                <div style={{marginTop: "50px",  display: "flex", padding: "0px", flexDirection: "column",marginRight: "5vw", }}>
+                    <div style={{padding: "20px", display: "flex", flexDirection: "column", width: "100%"}}>
+                        <h6 style={{fontSize: "20px", marginLeft: "0px",marginTop:"0px",marginBottom:"20px", padding: "0px"}}>In Germany, there are approximately 11 million hectares of forrest.</h6>
+                        <h6 style={{fontSize: "20px", marginLeft: "0px",marginTop:"0px",marginBottom:"20px"}}>This means that for each German citizen, there are <span style={{color: "green"}}>0.13 hectares</span> of forrest.</h6>
+                        <h6 style={{fontSize: "20px", marginLeft: "0px",marginTop:"0px",marginBottom:"20px"}}>Just to absorb the CO2 emitted by your heating system, <span style={{color: "red"}}>{(kwPerYear * kwToCo2Factor / 1000 / co2IntakePerHectarPerYearInKg!).toString().slice(0,4)} hectares</span> of forrest are already needed.</h6>
+                        <Button style={{width: "160px",alignSelf: "flex-end"}} onClick={handlersForrestToTakeCo2.open}>See Calculation</Button>
                     </div>
-
-
-
 
                     <Drawer opened={openedCalcForrestToTakeCo2} onClose={handlersForrestToTakeCo2.close}>
                         <DrawerContent></DrawerContent>
