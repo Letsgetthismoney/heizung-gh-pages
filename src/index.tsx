@@ -5,14 +5,30 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import store from "./Store";
+import {createTheme, MantineProvider} from "@mantine/core";
+// core styles are required for all packages
+import '@mantine/core/styles.css';
+import {notifications, Notifications} from "@mantine/notifications";
+import '@mantine/notifications/styles.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const theme = createTheme({
+    /** Put your mantine theme override here */
+});
+notifications.show({
+    title: 'ui optimzed for Desktop use',
+    message: 'This is a prototype',
+})
 root.render(
   <React.StrictMode>
       <Provider store={store}>
-        <App />
+          <MantineProvider theme={theme}>
+              <Notifications position="top-right"/>
+              <App />
+          </MantineProvider>
       </Provider>
   </React.StrictMode>
 );

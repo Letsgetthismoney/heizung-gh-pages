@@ -43,12 +43,9 @@ export const ForrestUi = ({kwPerYear, energyType}: {kwPerYear:number, energyType
                     <p>
                         Its assumed, that one Kilowatt-hour using {state.config?.energyType} emits <NumberInput
                         defaultValue={0.1}
-                        precision={1}
                         min={0}
                         step={1}
                         max={1000}
-                        stepHoldDelay={500}
-                        stepHoldInterval={0.1}
                         style={{width: "100px"}} value={kwToCo2Factor!} onChange={e => setKwToCo2Factor(parseInt(e.toString()))} /> grams of Co2
                     </p>
                 </div>
@@ -57,12 +54,9 @@ export const ForrestUi = ({kwPerYear, energyType}: {kwPerYear:number, energyType
                 <p>
                     Its assumed, that one hectar forrest can bind <NumberInput
                     defaultValue={0.1}
-                    precision={1}
                     min={0}
                     step={1}
                     max={100000}
-                    stepHoldDelay={500}
-                    stepHoldInterval={1}
                     style={{width: "100px"}} value={co2IntakePerHectarPerYearInKg!} onChange={e => setco2IntakePerHectarPerYearInKg(parseInt(e.toString()))} /> kilograms of co2 per year
                 </p>
             </div>
@@ -104,7 +98,7 @@ export const ForrestUi = ({kwPerYear, energyType}: {kwPerYear:number, energyType
             <div style={{height: "100%", maxWidth: "100vw", display: "flex", padding: "0px", flexDirection: "column", justifyContent: "space-between"}}>
                 <div style={{padding: "20px", display: "flex", flexDirection: "column", width: "100%", height: "100%", justifyContent: "center"}}>
                         <h6 style={{fontSize: "20px", marginLeft: "0px",marginTop:"0px",marginBottom:"20px", padding: "0px"}}>In Germany, there are approximately 11 million hectares of forrest.</h6>
-                        <h6 style={{fontSize: "20px", marginLeft: "0px",marginTop:"0px",marginBottom:"20px"}}>This means that for each German citizen, there are <span style={{color: "green"}}>0.13 hectares</span> of forrest.</h6>
+                        <h6 style={{fontSize: "20px", marginLeft: "0px",marginTop:"0px",marginBottom:"20px"}}>This means that for each German citizen, there are <span style={{color: "green"}}>0.13 hectares</span> of forrest in total.</h6>
                         <h6 style={{fontSize: "20px", marginLeft: "0px",marginTop:"0px",marginBottom:"20px"}}>Just to absorb the CO2 emitted by your heating system, <span style={{color: "red"}}>{(kwPerYear * kwToCo2Factor / 1000 / co2IntakePerHectarPerYearInKg!).toString().slice(0,4)} hectares</span> of forrest are already needed.</h6>
                         <Button style={{alignSelf: "flex-end", justifySelf: "flex-end", marginRight: "30px"}} onClick={handlersForrestToTakeCo2.open}>See Calculation</Button>
                 </div>

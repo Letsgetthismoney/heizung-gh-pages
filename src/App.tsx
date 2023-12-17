@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import './App.css';
 import {
@@ -11,16 +11,19 @@ import { UserInput} from "./aUserInput";
 import {useAppDispatch, useAppSelector} from "./Store";
 import {backToConfig, selectApp} from "./state";
 
-
+//custom balken diagram (y-achse angepasst an konkreten value)
+//notifactions für desktop optimierung
+//Icon im browser tab customizen -> etce lab logo und angemessener titel
 function App() {
 
     const selectState = useAppSelector(selectApp)
     const dispatch = useAppDispatch()
 
 
+
     return (
       <div style={{display: "flex", width: "95vw", flexDirection: "column", alignItems: "flex-start", padding: "0px", height: "100vh"}}>
-        <Image src={powerBackground} style={{position:"absolute", width: "100vw",objectFit: "fill", zIndex: "-10"}} height={"100vh"} ></Image>
+        <Image src={powerBackground} style={{position:"absolute", width: "100vw",objectFit: "fill", zIndex: "-10", height: "100vh"}}></Image>
           {
               selectState.status === "config" && <div style={{display: "flex", justifyContent: "center", alignItems: "center", width: "100vw", height: "90vh"}}>
                   <UserInput></UserInput>

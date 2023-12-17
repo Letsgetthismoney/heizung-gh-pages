@@ -8,6 +8,7 @@ import {Form, setAppForm} from "./state";
 import powerBackground from "./tuc_logo.gif";
 import ausweis from "./energieausweis.png"
 import {useDisclosure} from "@mantine/hooks";
+import {notifications} from "@mantine/notifications";
 
 
 export const UserInput = () => {
